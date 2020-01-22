@@ -1,0 +1,24 @@
+Part1 Training strategy:
+	I use Gradient descent optimizer provided by the tensorflow. The learning rate I set is 1*e-4 which is a reasonable learning rate. It is reasonable because when it is above 0.0001, increasing the learning rate increased the time to train and also increased the variance in training time [1]. If below the 0.0001 it would need too much data samples to make it at a high quality. and do not improve the accuracy much. 
+	In order to prevent overfitting problem, I also use the keep_prob veriable suggested by [2]. I treated the drop out factor as a training variable. I use 6000 interations with 50 batches each time. I got this numbers by try and error method to get the best performance.
+	For initialization, I use truncate_normal function provided by tensorflow. Firstly, I have no direction. As said by the manual, we cannot just initialize to 0. As a result, I tried normal distribution with standard deviation of 0.1.
+	For samples feeding, I use the built in function batch_next which provided by read_data_sets function. After this object is created, this function will draw a certain number of images each time and shuffle them. Then feed them into the network to make it work efficiently. As a result, I do not know when the whole training set is used up once. There is no clear definition about epoch in this method. I just keep ieterating until the output become feasible.
+
+Part2  Visual Comparison:
+	I randomly select different image from the test set to validate the result by eye. And all the image I used is classified to a correct catagory. The result is listed below.
+
+
+
+Part3  Plot: 
+	For each 30 interation I samples the accuracy from the model with 1000 test datas. The ways of compute the accuracy is given by [3]. It is basically feed the test data into the current network to get the prediction result, and compared the correct label for each sample. And then calculate the accuracy by averaging through the samples. As expected, the big trend is the accuracy keeping increasing as more and more data is fed into the network. And finally oscillate between 95% and 96%. Since it is always the first 1000 data gets fed in, the result maybe a little bit biasing.  On the contrary the loss is keeping decrease and finally saturated at about 13%. I can see it is still bouncing up and down between 16% to 5%. 
+
+
+
+Part4  Data accuracy:
+	It is printed as the last part of the code. I seperate the testing set into 3 parts. [0:1000] [1001:2001] [2002:3003] all of them have 1001 images to be evaluated and the accuracy is 98% 98% 98% correspondingly. The average is 98% percent higher the 85% said in the manual. In the previous secion, I randomly choose some of the picture to validate them visually and all the answer is correct. As a result, it is a relative accurate model with still some space for improvement. Then I tried a bigger set which have 10000 datas which has a accuracy of 98% percent which is feasible. I have tried to increase it to 99% as some of the paper suggest but I failed to do that maybe due to my training strategy.
+
+	Reference:
+	[1]GitHub. (2020). MorvanZhou/tutorials. [online] Available at: https://github.com/MorvanZhou/tutorials/blob/master/tensorflowTUT/tf18_CNN3/full_code.py [Accessed 22 Jan. 2020].
+	[2]Blog.csdn.net. (2020). tensorflow(6) mnist.train.next_batch()函数解析_liudiudiu-CSDN博客. [online] Available at: https://blog.csdn.net/u013608336/article/details/78747102 [Accessed 22 Jan. 2020].
+	[3]Medium. (2020). Adam — latest trends in deep learning optimization.. [online] Available at: https://towardsdatascience.com/adam-latest-trends-in-deep-learning-optimization-6be9a291375c [Accessed 22 Jan. 2020].
+	[4]MNIST, N. and Khetan, V. (2020). Neural Network Performs Bad On MNIST. [online] Data Science Stack Exchange. Available at: https://datascience.stackexchange.com/questions/26618/neural-network-performs-bad-on-mnist [Accessed 22 Jan. 2020].
